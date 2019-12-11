@@ -1,0 +1,15 @@
+[package]
+name = "as-result"
+version = "0.1.0"
+authors = ["Michael Aaron Murphy <mmstick@pm.me>"]
+repository = "https://github.com/pop-os/as-result"
+license = "MIT OR Apache-2.0"
+readme = "README.md"
+keywords = ["AsResult", "IntoResult", "ExitStatus"]
+categories = ["rust-patterns"]
+edition = "2018"
+description = """
+Traits for converting types which may be interpreted as or into a result.
+"""
+
+[dependencies]
