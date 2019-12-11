@@ -1,5 +1,7 @@
 # as-result
 
+![Crates.io](https://img.shields.io/crates/v/as-result)
+
 Rust crate which provides the `AsResult<T, E>` and `IntoResult<T, E>` traits.
 
 ## Supported Types
