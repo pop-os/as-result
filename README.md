@@ -1,6 +1,6 @@
 # as-result
 
-![Crates.io](https://img.shields.io/crates/v/as-result)
+[![Crates.io](https://img.shields.io/crates/v/as-result)](https://crates.io/crates/as-result)
 
 Rust crate which provides the `AsResult<T, E>` and `IntoResult<T, E>` traits.
 
@@ -18,7 +18,7 @@ By default, the following types from the standard library have implementations o
 Common when spawning commands is the desire to convert the exit status into a result:
 
 ```rust
-use as_result::AsResult;
+use as_result::IntoResult;
 use std::process::Command;
 
 Command::new("/usr/bin/echo")
