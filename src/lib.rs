@@ -1,4 +1,7 @@
-use std::{io, process::ExitStatus};
+use std::{
+    io,
+    process::{ExitStatus, Output},
+};
 
 #[cfg(unix)]
 use std::os::unix::process::ExitStatusExt as _;
@@ -10,11 +13,9 @@ pub trait AsResult<T, E> {
 }
 
 /// Converts the type into a `std::io::Result<()>`
-pub trait IntoResult<T, E>: AsResult<T, E> + Sized {
+pub trait IntoResult<T, E> {
     /// Converts the type into a `std::io::Result<()>`
-    fn into_result(self) -> Result<T, E> {
-        self.as_result()
-    }
+    fn into_result(self) -> Result<T, E>;
 }
 
 impl AsResult<(), io::Error> for ExitStatus {
@@ -39,7 +40,17 @@ impl AsResult<(), io::Error> for ExitStatus {
     }
 }
 
-impl IntoResult<(), io::Error> for ExitStatus {}
+impl IntoResult<(), io::Error> for ExitStatus {
+    fn into_result(self) -> io::Result<()> {
+        self.as_result()
+    }
+}
+
+impl IntoResult<Output, io::Error> for Output {
+    fn into_result(self) -> io::Result<Output> {
+        self.status.as_result().map(|_| self)
+    }
+}
 
 #[cfg(test)]
 mod tests {

@@ -9,9 +9,11 @@ Rust crate which provides the `AsResult<T, E>` and `IntoResult<T, E>` traits.
 By default, the following types from the standard library have implementations of these traits:
 
 - [std::process::ExitStatus] implemented for [std::io::Result]<()>
+- [std::process::Output] implemented for [std::io::Result]<[std::process::Output]>
 
 [std::io::Result]: https://doc.rust-lang.org/std/io/type.Result.html
 [std::process::ExitStatus]: https://doc.rust-lang.org/std/process/struct.ExitStatus.html
+[std::process::Output]: https://doc.rust-lang.org/std/process/struct.Output.html
 
 ## Example
 
