@@ -18,6 +18,12 @@ pub trait IntoResult<T, E> {
     fn into_result(self) -> Result<T, E>;
 }
 
+/// Maps a result into another result
+pub trait MapResult<T, E> {
+    /// Maps a result into another result
+    fn map_result(self) -> Result<T, E>;
+}
+
 impl AsResult<(), io::Error> for ExitStatus {
     fn as_result(&self) -> io::Result<()> {
         Err(if self.success() {
@@ -52,6 +58,12 @@ impl IntoResult<Output, io::Error> for Output {
     }
 }
 
+impl MapResult<(), io::Error> for io::Result<ExitStatus> {
+    fn map_result(self) -> io::Result<()> {
+        self.and_then(IntoResult::into_result)
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -59,17 +71,23 @@ mod tests {
 
     #[test]
     fn command() {
-        Command::new("/usr/bin/echo")
+        Command::new("/bin/echo")
             .arg("hello world")
             .status()
             .and_then(IntoResult::into_result)
             .unwrap();
 
-        Command::new("/usr/bin/echo")
+        Command::new("/bin/echo")
             .arg("hello world")
             .status()
             .unwrap()
             .into_result()
+            .unwrap();
+
+        Command::new("/bin/echo")
+            .arg("hello world")
+            .status()
+            .map_result()
             .unwrap()
     }
 }

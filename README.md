@@ -20,20 +20,26 @@ By default, the following types from the standard library have implementations o
 Common when spawning commands is the desire to convert the exit status into a result:
 
 ```rust
-use as_result::IntoResult;
+use as_result::*;
 use std::process::Command;
 
-Command::new("/usr/bin/echo")
+Command::new("/bin/echo")
     .arg("hello world")
     .status()
     .and_then(IntoResult::into_result)
     .unwrap();
 
-Command::new("/usr/bin/echo")
+Command::new("/bin/echo")
     .arg("hello world")
     .status()
     .unwrap()
     .into_result()
+    .unwrap();
+
+Command::new("/bin/echo")
+    .arg("hello world")
+    .status()
+    .map_result()
     .unwrap()
 ```
 
